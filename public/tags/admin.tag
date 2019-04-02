@@ -73,8 +73,9 @@
       observable.trigger('updateMemes', tempData);
     })
 
+
     orderResults(event){
-      //get order value
+      //1. get order value
       let order = this.refs.order.value;
       // console.log("order", order);
 
