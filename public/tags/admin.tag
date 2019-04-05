@@ -15,7 +15,6 @@
     </select>
   </div>
 
-
   <div class="filter">
     <p>filter by level of fun</p>
     <select ref="fun" value="" onchange={ filterResults }>
@@ -68,36 +67,33 @@
       }
       // console.log("myMemes", tag.myMemes);
       tag.myMemes = tempData;
-
       tag.update();
-      observable.trigger('updateMemes', tempData);
     })
 
-    orderResults(event){
-      //get order value
+    orderResults() {
+      //1. get order value
       let order = this.refs.order.value;
       // console.log("order", order);
 
       let orderResult = messagesRef;
       console.log("messagesRef", messagesRef);
 
-      if (order == "funnees"){
-        orderResult = orderResult.orderByChild('funness');
-        console.log("order by funness", orderResult);
-      }else if(order == "caption"){
-        orderResult = orderResult.orderByChild('caption');
-      }else{
-        // default, nothing happens
+      // if order is selected as funnies, then order messages by child propoerty funness if order is selected as caption, then order messages by child propoerty caption if order is elected as default, no need to reorder at specifically
+      if(order=="funness"){
+        orderResult = orderResult.orderByChild("funness");
+      }else if(order=="caption"){
+        orderResult = orderResult.orderByChild("funness");
+      }else if(order=="default"){
+
       }
 
       orderResult.once('value', function (snap) {
-        // let rawdata = snap.val();
-        // console.log("datafromfb", datafromfb);
+        // let rawdata = snap.val(); console.log("datafromfb", datafromfb);
         let tempData = [];
 
-        snap.forEach(function(child) {
-           tempData.push(child.val()); // NOW THE CHILDREN PRINT IN ORDER
-       });
+        snap.forEach(function (child) {
+          tempData.push(child.val()); // NOW THE CHILDREN PRINT IN ORDER
+        });
 
         tag.myMemes = tempData;
 
@@ -143,13 +139,11 @@
     }
   </script>
 
-
   <style>
     :scope {
       display: block;
       padding: 2em;
     }
-
 
     .memeMaker {
       padding: 2em;
@@ -157,13 +151,13 @@
       background-color: grey;
     }
 
-    .order{
+    .order {
       padding: 2em;
       margin-top: 2em;
       background-color: powderblue;
     }
 
-    .filter{
+    .filter {
       padding: 2em;
       margin-top: 2em;
       background-color: steelblue;
