@@ -7,8 +7,9 @@
 
 	<style>
 		:scope {
-			display:block;
+			display:inline-block;
 		}
+
 		.frame{
 			background-color: cyan;
 			padding:1em;

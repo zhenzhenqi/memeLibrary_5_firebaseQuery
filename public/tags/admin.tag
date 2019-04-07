@@ -34,16 +34,15 @@
   <script>
     //console.log(this);
     var tag = this;
+    var messagesRef = rootRef.child("memes");
 
     //local database is always empty, and read dynamicly from fb.
     this.myMemes = [];
 
     //prepare to push into memes subdirectory in our database
-    var messagesRef = rootRef.child('/memes');
-
     this.saveMeme = function () {
-      var key = messagesRef.push().key;
-      var meme = {
+      let key = messagesRef.push().key;
+      let meme = {
         id: key,
         url: this.refs.urlEl.value,
         caption: this.refs.captionEl.value,

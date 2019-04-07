@@ -13,7 +13,7 @@
 
   <style>
   :scope {
-    display: inline;
+    display: inline-block;
   }
   img {
     width: 100%;
