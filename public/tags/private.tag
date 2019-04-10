@@ -4,7 +4,6 @@
       <button type="button" onclick={ logOut}>Log Out</button>
     </div>
 
-
     <div class="memeMaker">
       <input type="text" ref="urlEl" placeholder="Enter url">
       <input type="text" ref="captionEl" placeholder="Enter caption">
@@ -12,7 +11,7 @@
       <button type="button" onclick={ saveMeme }>Add Meme</button>
     </div>
 
-    <!-- <div class="order">
+    <div class="order">
       <p>order data by</p>
       <select ref="order" value="" onchange={ orderResults }>
         <option value="default">default</option>
@@ -29,7 +28,7 @@
         <option value="somewhatfun">Some Fun</option>
         <option value="veryfun">Very Fun</option>
       </select>
-    </div> -->
+    </div>
 
     <div show={ myMemes.length == 0 }>
       <p>NO MEMEs. Add a meme from above.</p>
@@ -39,22 +38,22 @@
 
 
 <script>
-
+  var tag= this;
   // console.log("parent " ,this.parent.currentUser);
 
   this.currentUser = firebase.auth().currentUser;
 
-
+  this.logOut = this.parent.logOut;
 
   // var messagesRef = rootRef.child("memes");
-  var myRef = rootRef.child('memes/private' + this.currentUser.uid);
+  var myRef = rootRef.child('memes/private/' + this.currentUser.uid);
 
   //local database is always empty, and read dynamicly from fb.
   this.myMemes = [];
 
   //prepare to push into memes subdirectory in our database
   this.saveMeme = function () {
-    let key = messagesRef.push().key;
+    let key = myRef.push().key;
     let meme = {
       id: key,
       userID: this.currentUser.uid, //global google authenticated user object
@@ -95,71 +94,6 @@
     tag.update();
   })
 
-  // orderResults() {
-  //   //1. get order value
-  //   let order = this.refs.order.value;
-  //   // console.log("order", order);
-  //
-  //   let orderResult = messagesRef;
-  //   console.log("messagesRef", messagesRef);
-  //
-  //   // if order is selected as funnies, then order messages by child propoerty funness if order is selected as caption, then order messages by child propoerty caption if order is elected as default, no need to reorder at specifically
-  //   if (order == "funness") {
-  //     orderResult = orderResult.orderByChild("funness");
-  //   } else if (order == "caption") {
-  //     orderResult = orderResult.orderByChild("funness");
-  //   } else if (order == "default") {}
-  //
-  //   orderResult.once('value', function (snap) {
-  //     // let rawdata = snap.val(); console.log("datafromfb", datafromfb);
-  //     let tempData = [];
-  //
-  //     snap.forEach(function (child) {
-  //       tempData.push(child.val()); // NOW THE CHILDREN PRINT IN ORDER
-  //     });
-  //
-  //     tag.myMemes = tempData;
-  //
-  //     tag.update();
-  //     observable.trigger('updateMemes', tempData);
-  //   });
-  // }
-
-  // filterResults(event) {
-  //   //get current filter value
-  //   var fun = this.refs.fun.value;
-  //   //order memes by child property funnees
-  //   let queryResult = messagesRef.orderByChild('funness');
-  //   console.log("queryResult", queryResult);
-  //
-  //   //combine with additional functions to form complex queries
-  //   if (fun == "nofun") {
-  //     queryResult = queryResult.equalTo("0");
-  //     console.log("queryResult for no fun", queryResult);
-  //   } else if (fun == "veryfun") {
-  //     queryResult = queryResult.equalTo("5");
-  //     console.log("queryResult for very full", queryResult);
-  //   } else if (fun == "somewhatfun") {
-  //     queryResult = queryResult.startAt('1').endAt('4');
-  //     console.log("queryResult for some fun", queryResult);
-  //   } else {
-  //     //default, no query needed
-  //   }
-  //
-  //   queryResult.once('value', function (snap) {
-  //     let rawdata = snap.val();
-  //     // console.log("datafromfb", datafromfb);
-  //     let tempData = [];
-  //     for (key in rawdata) {
-  //       tempData.push(rawdata[key]);
-  //     }
-  //     // console.log("myMemes", tag.myMemes);
-  //     tag.myMemes = tempData;
-  //
-  //     tag.update();
-  //     observable.trigger('updateMemes', tempData);
-  //   });
-  // }
 </script>
 
 <style></style> -->

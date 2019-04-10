@@ -1,11 +1,11 @@
 <admin>
-  <!-- <div class="login" if={!currentUser}>
+  <div class="login" if={!currentUser}>
     <p>Thanks for visiting. Please proceed to Google Authentication</p>
     <button type="button" onclick={ logIn }>Login</button>
-  </div> -->
+  </div>
 
-  <public if={!currentUser}></public>
   <private if={currentUser}></private>
+
 
   <script>
     var tag = this;
