@@ -15,6 +15,8 @@
 	<script src="./tags/about.tag" type="riot/tag"></script>
 	<script src="./tags/menu.tag" type="riot/tag"></script>
 	<script src="./tags/admin.tag" type="riot/tag"></script>
+	<script src="./tags/public.tag" type="riot/tag"></script>
+	<script src="./tags/private.tag" type="riot/tag"></script>
 	<script src="./tags/admin_entry.tag" type="riot/tag"></script>
 	<script src="./tags/memes.tag" type="riot/tag"></script>
 	<script src="./tags/meme.tag" type="riot/tag"></script>
@@ -25,12 +27,12 @@
 
 	<script>
 		var config = {
-			apiKey: "AIzaSyD7gwDGspYq96IlwTApxZCcm4qMSnvFefk",
-	    authDomain: "write3-a3f07.firebaseapp.com",
-	    databaseURL: "https://write3-a3f07.firebaseio.com",
-	    projectId: "write3-a3f07",
-	    storageBucket: "write3-a3f07.appspot.com",
-	    messagingSenderId: "1082560837878"
+			apiKey: "AIzaSyB-KGod5FgwB7D8ZAs3l1Xb2-_oX4KgScE",
+			authDomain: "write2-319e9.firebaseapp.com",
+			databaseURL: "https://write2-319e9.firebaseio.com",
+			projectId: "write2-319e9",
+			storageBucket: "write2-319e9.appspot.com",
+			messagingSenderId: "112426494810"
 		};
 
 
@@ -39,7 +41,7 @@
 		//firebase is a js object that help communicate between your code and the cloud server
 		//get a function from this object that specifically deals with database
 		var database = firebase.database();
-
+		var user = firebase.auth();
 		//step one: it's a common practice to get the reference to the root of the database
 		var rootRef = database.ref('/');
 

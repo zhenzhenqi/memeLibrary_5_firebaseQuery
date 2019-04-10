@@ -5,6 +5,7 @@
   <p>funness: { funness }</p>
   <p>id: {id}</p>
   <button type="button" onclick={ remove }>Remove This</button>
+  <button type="button" onclick={ toggle }>{ public ? "UNPUBLISH" : "PUBLISH"}</button>
   <style>
     :scope {
       display: block;
@@ -18,11 +19,15 @@
     var messagesRef = rootRef.child('/memes');
     // console.log("this.id", this.id);
 
-    remove = function (){
+    this.remove = function (){
       console.log("this.id", this.id);
       //remember how we pushed the unique key as a property of each meme?
       var key = this.id;
       messagesRef.child(key).remove();
+    }
+
+    this.toggle = function(){
+      this.public = !this.public;
     }
   </script>
 
