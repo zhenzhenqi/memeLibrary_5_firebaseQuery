@@ -1,14 +1,10 @@
 <admin>
-  <div class="login" if={!currentUser}>
+  <!-- <div class="login" if={!currentUser}>
     <p>Thanks for visiting. Please proceed to Google Authentication</p>
     <button type="button" onclick={ logIn }>Login</button>
-  </div>
+  </div> -->
 
-  <div class="login" if={currentUser}>
-    <p>Welcome to the admin section, {currentUser.email}</p>
-    <button type="button" onclick={ logOut}>Log Out</button>
-  </div>
-
+  <public if={!currentUser}></public>
   <private if={currentUser}></private>
 
   <script>
@@ -25,7 +21,7 @@
     user.onAuthStateChanged(function (userObj) {
       //return currentUser console.log("userObj", userObj);
       // if(userObj){
-        this.currentUser = firebase.auth().currentUser;
+      tag.currentUser = firebase.auth().currentUser;
       // }else{
         // this.currentUser = null;
       // }

@@ -1,5 +1,8 @@
 <private>
-  <h1>test</h1>
+    <div class="login" if={currentUser}>
+      <p>Welcome to the admin section, {currentUser.email}</p>
+      <button type="button" onclick={ logOut}>Log Out</button>
+    </div>
 
 
     <div class="memeMaker">
@@ -9,7 +12,7 @@
       <button type="button" onclick={ saveMeme }>Add Meme</button>
     </div>
 
-    <div class="order">
+    <!-- <div class="order">
       <p>order data by</p>
       <select ref="order" value="" onchange={ orderResults }>
         <option value="default">default</option>
@@ -26,7 +29,7 @@
         <option value="somewhatfun">Some Fun</option>
         <option value="veryfun">Very Fun</option>
       </select>
-    </div>
+    </div> -->
 
     <div show={ myMemes.length == 0 }>
       <p>NO MEMEs. Add a meme from above.</p>
@@ -37,7 +40,7 @@
 
 <script>
 
-  console.log("parent " ,this.parent.currentUser);
+  // console.log("parent " ,this.parent.currentUser);
 
   this.currentUser = firebase.auth().currentUser;
 
@@ -60,12 +63,14 @@
       caption: this.refs.captionEl.value,
       funness: this.refs.funnyEl.value
     }
-    // messagesRef.child(key).set(meme); set meme while catching potential error messages(optional)
-    // myCommentsRef.child(key).set(meme).then(function (result) {
-    //   console.log(result);
-    // }).catch(function (error) {
-    //   console.log(error.message);
-    // });
+
+    //messagesRef.child(key).set(meme);
+    //set meme while catching potential error messages(optional)
+    myRef.child(key).set(meme).then(function (result) {
+      console.log(result);
+    }).catch(function (error) {
+      console.log(error.message);
+    });
 
     this.reset();
   }
@@ -78,7 +83,7 @@
   }
 
   // listen to database value change and update result
-  messagesRef.on('value', function (snap) {
+  myRef.on('value', function (snap) {
     let rawdata = snap.val();
     // console.log("rawdata", rawdata);
     let tempData = [];
@@ -90,71 +95,71 @@
     tag.update();
   })
 
-  orderResults() {
-    //1. get order value
-    let order = this.refs.order.value;
-    // console.log("order", order);
+  // orderResults() {
+  //   //1. get order value
+  //   let order = this.refs.order.value;
+  //   // console.log("order", order);
+  //
+  //   let orderResult = messagesRef;
+  //   console.log("messagesRef", messagesRef);
+  //
+  //   // if order is selected as funnies, then order messages by child propoerty funness if order is selected as caption, then order messages by child propoerty caption if order is elected as default, no need to reorder at specifically
+  //   if (order == "funness") {
+  //     orderResult = orderResult.orderByChild("funness");
+  //   } else if (order == "caption") {
+  //     orderResult = orderResult.orderByChild("funness");
+  //   } else if (order == "default") {}
+  //
+  //   orderResult.once('value', function (snap) {
+  //     // let rawdata = snap.val(); console.log("datafromfb", datafromfb);
+  //     let tempData = [];
+  //
+  //     snap.forEach(function (child) {
+  //       tempData.push(child.val()); // NOW THE CHILDREN PRINT IN ORDER
+  //     });
+  //
+  //     tag.myMemes = tempData;
+  //
+  //     tag.update();
+  //     observable.trigger('updateMemes', tempData);
+  //   });
+  // }
 
-    let orderResult = messagesRef;
-    console.log("messagesRef", messagesRef);
-
-    // if order is selected as funnies, then order messages by child propoerty funness if order is selected as caption, then order messages by child propoerty caption if order is elected as default, no need to reorder at specifically
-    if (order == "funness") {
-      orderResult = orderResult.orderByChild("funness");
-    } else if (order == "caption") {
-      orderResult = orderResult.orderByChild("funness");
-    } else if (order == "default") {}
-
-    orderResult.once('value', function (snap) {
-      // let rawdata = snap.val(); console.log("datafromfb", datafromfb);
-      let tempData = [];
-
-      snap.forEach(function (child) {
-        tempData.push(child.val()); // NOW THE CHILDREN PRINT IN ORDER
-      });
-
-      tag.myMemes = tempData;
-
-      tag.update();
-      observable.trigger('updateMemes', tempData);
-    });
-  }
-
-  filterResults(event) {
-    //get current filter value
-    var fun = this.refs.fun.value;
-    //order memes by child property funnees
-    let queryResult = messagesRef.orderByChild('funness');
-    console.log("queryResult", queryResult);
-
-    //combine with additional functions to form complex queries
-    if (fun == "nofun") {
-      queryResult = queryResult.equalTo("0");
-      console.log("queryResult for no fun", queryResult);
-    } else if (fun == "veryfun") {
-      queryResult = queryResult.equalTo("5");
-      console.log("queryResult for very full", queryResult);
-    } else if (fun == "somewhatfun") {
-      queryResult = queryResult.startAt('1').endAt('4');
-      console.log("queryResult for some fun", queryResult);
-    } else {
-      //default, no query needed
-    }
-
-    queryResult.once('value', function (snap) {
-      let rawdata = snap.val();
-      // console.log("datafromfb", datafromfb);
-      let tempData = [];
-      for (key in rawdata) {
-        tempData.push(rawdata[key]);
-      }
-      // console.log("myMemes", tag.myMemes);
-      tag.myMemes = tempData;
-
-      tag.update();
-      observable.trigger('updateMemes', tempData);
-    });
-  }
+  // filterResults(event) {
+  //   //get current filter value
+  //   var fun = this.refs.fun.value;
+  //   //order memes by child property funnees
+  //   let queryResult = messagesRef.orderByChild('funness');
+  //   console.log("queryResult", queryResult);
+  //
+  //   //combine with additional functions to form complex queries
+  //   if (fun == "nofun") {
+  //     queryResult = queryResult.equalTo("0");
+  //     console.log("queryResult for no fun", queryResult);
+  //   } else if (fun == "veryfun") {
+  //     queryResult = queryResult.equalTo("5");
+  //     console.log("queryResult for very full", queryResult);
+  //   } else if (fun == "somewhatfun") {
+  //     queryResult = queryResult.startAt('1').endAt('4');
+  //     console.log("queryResult for some fun", queryResult);
+  //   } else {
+  //     //default, no query needed
+  //   }
+  //
+  //   queryResult.once('value', function (snap) {
+  //     let rawdata = snap.val();
+  //     // console.log("datafromfb", datafromfb);
+  //     let tempData = [];
+  //     for (key in rawdata) {
+  //       tempData.push(rawdata[key]);
+  //     }
+  //     // console.log("myMemes", tag.myMemes);
+  //     tag.myMemes = tempData;
+  //
+  //     tag.update();
+  //     observable.trigger('updateMemes', tempData);
+  //   });
+  // }
 </script>
 
 <style></style> -->
