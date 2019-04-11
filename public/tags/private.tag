@@ -92,7 +92,78 @@
     // console.log("myMemes", tag.myMemes);
     tag.myMemes = tempData;
     tag.update();
-  })
+    observable.trigger('updateMemes', tempData);
+  });
+
+  orderResults() {
+    //1. get order value
+    let order = this.refs.order.value;
+    // console.log("order", order);
+
+    let orderResult = myRef;
+    console.log("myRef", myRef);
+
+    // if order is selected as funnies, then order messages by child propoerty funness if order is selected as caption, then order messages by child propoerty caption if order is elected as default, no need to reorder at specifically
+    if(order=="funness"){
+      orderResult = orderResult.orderByChild("funness");
+    }else if(order=="caption"){
+      orderResult = orderResult.orderByChild("funness");
+    }else if(order=="default"){
+
+    }
+
+    orderResult.once('value', function (snap) {
+      // let rawdata = snap.val(); console.log("datafromfb", datafromfb);
+      let tempData = [];
+
+      snap.forEach(function (child) {
+        tempData.push(child.val()); // NOW THE CHILDREN PRINT IN ORDER
+      });
+
+      tag.myMemes = tempData;
+
+      tag.update();
+      observable.trigger('updateMemes', tempData);
+    });
+  }
+
+  filterResults(event) {
+    //get current filter value
+    var fun = this.refs.fun.value;
+    //order memes by child property funnees
+    let queryResult = myRef.orderByChild('funness');
+    console.log("queryResult", queryResult);
+
+    //combine with additional functions to form complex queries
+    if (fun == "nofun") {
+      queryResult = queryResult.equalTo("0");
+        console.log("queryResult for no fun", queryResult);
+    } else if (fun == "veryfun") {
+      queryResult = queryResult.equalTo("5");
+      console.log("queryResult for very full", queryResult);
+    } else if (fun == "somewhatfun") {
+      queryResult = queryResult.startAt('1').endAt('4');
+      console.log("queryResult for some fun", queryResult);
+    } else {
+      //default, no query needed
+    }
+
+    queryResult.once('value', function (snap) {
+      let rawdata = snap.val();
+      // console.log("datafromfb", datafromfb);
+      let tempData = [];
+      for (key in rawdata) {
+        tempData.push(rawdata[key]);
+      }
+      // console.log("myMemes", tag.myMemes);
+      tag.myMemes = tempData;
+
+      tag.update();
+      observable.trigger('updateMemes', tempData);
+    });
+  }
+
+
 
 </script>
 

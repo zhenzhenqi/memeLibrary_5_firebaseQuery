@@ -5,7 +5,6 @@
   "rules": {
     "comments": {
       "public": {
-        /* everyone can read public comments */
         ".read": true,
         "$commentID": {
           ".write": "!data.exists() || (data.exists() && data.child('userID').val() === auth.uid)",

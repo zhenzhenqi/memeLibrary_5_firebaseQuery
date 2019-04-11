@@ -43,7 +43,6 @@
       user.signOut();
     }
 
-
   </script>
 
   <style>
