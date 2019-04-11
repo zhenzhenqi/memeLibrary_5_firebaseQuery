@@ -1,6 +1,31 @@
-{
-  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+/* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+
+
+/* {
   "rules": {
+    "comments": {
+      "public": {
+        ".read": true,
+        "$commentID": {
+          ".write": "!data.exists() || (data.exists() && data.child('userID').val() === auth.uid)",
+          ".validate": "newData.child('userID').val() === auth.uid"
+        }
+      },
+      "users": {
+        "$userID": {
+          ".read": "auth.uid === $userID",
+          ".write": "auth.uid === $userID",
+          "$commentID": {
+            ".validate": "newData.child('userID').val() === auth.uid"
+          }
+        }
+      }
+    }
+  }
+} */
+
+{
+  "rules":{
     ".read": true,
     ".write": true
   }
